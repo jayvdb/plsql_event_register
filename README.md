@@ -25,7 +25,11 @@ functionality, such as Logger and APEX support.
 
 The flags are:
 
-1. `use_logger`: Hooks into the `Logger` package.
-2. `use_apex`: Hooks into the `APEX_DEBUG` package.
+1. `use_logger=1`: Adds hooks into the `Logger` package.
+2. `use_apex=1`: Adds hooks into the `APEX_DEBUG` package.
+
+For example, after loading the package, to enable APEX debugging, run
+
+    ALTER PACKAGE register COMPILE PLSQL_CCFLAGS='use_apex:1' REUSE SETTINGS;
 
 See http://www.oratechinfo.co.uk/plsql_compiler_flags.html
