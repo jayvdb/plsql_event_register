@@ -5,6 +5,7 @@ set serveroutput on
 @src/register.pkb
 
 ALTER PACKAGE register COMPILE PLSQL_CCFLAGS='use_apex:1' REUSE SETTINGS;
+ALTER PACKAGE register COMPILE PLSQL_CCFLAGS='use_logger:1' REUSE SETTINGS;
 
 begin
   register.dbms_output_enable;

@@ -90,15 +90,18 @@ procedure emit_logger(
 as
   v_module varchar2(200) := p_module;
   v_action varchar2(4000);  -- Unused
+  v_scope varchar2(4000);
 begin
   $if $$use_logger = 1 $then
     if v_module is null then
       DBMS_APPLICATION_INFO.READ_MODULE(v_module, v_action);
     end if;
+    v_scope := v_module || '.' || nvl(v_action, '(no action)');
     if p_level >= c_trace then
-      logger.log_trace(p_text, v_scope, p_extra => p_extra);
+      -- this could set the level to c_timing?
+      logger.log(p_text, v_scope, p_extra => p_extra);
     elsif p_level = c_debug then
-      logger.log_debug(p_text, v_scope, p_extra => p_extra);
+      logger.log(p_text, v_scope, p_extra => p_extra);
     elsif p_level = c_info then
       logger.log_info(p_text, v_scope, p_extra => p_extra);
     elsif p_level = c_warn then
@@ -158,6 +161,7 @@ begin
     emit_logger(
       p_module => p_module,
       p_text => v_text,
+      p_extra => p_extra,
       p_level => p_level);
   $end
 
